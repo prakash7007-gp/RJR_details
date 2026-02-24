@@ -1,0 +1,170 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================
+// ENUMS
+// ============================================
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum EmployeeStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum AttendanceStatus {
+  PRESENT
+  ABSENT
+  LEAVE
+}
+
+enum LeaveType {
+  SICK
+  CASUAL
+  ANNUAL
+  UNPAID
+}
+
+enum LeaveStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum PaymentStatus {
+  PAID
+  PENDING
+}
+
+enum UserRole {
+  ADMIN
+  EMPLOYEE
+}
+
+// ============================================
+// MODELS
+// ============================================
+
+// User Model (HR Admin)
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      UserRole @default(EMPLOYEE)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([email])
+}
+
+// Employee Model
+model Employee {
+  id              String         @id @default(uuid())
+  employeeId      String         @unique
+  fullName        String
+  gender          Gender
+  dateOfBirth     DateTime
+  email           String         @unique
+  phone           String
+  address         String
+  department      String
+  designation     String
+  joiningDate     DateTime
+  salary          Decimal        @db.Decimal(10, 2)
+  status          EmployeeStatus @default(ACTIVE)
+  emergencyContact String?
+  photo           String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  // Relations
+  attendances     Attendance[]
+  leaves          Leave[]
+  salaries        Salary[]
+
+  @@index([employeeId])
+  @@index([email])
+  @@index([department])
+  @@index([status])
+}
+
+// Attendance Model
+model Attendance {
+  id         String            @id @default(uuid())
+  employeeId String
+  date       DateTime          @db.Date
+  status     AttendanceStatus
+  checkIn    DateTime?
+  checkOut   DateTime?
+  notes      String?
+  createdAt  DateTime          @default(now())
+
+  // Relations
+  employee   Employee          @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@unique([employeeId, date])
+  @@index([employeeId])
+  @@index([date])
+  @@index([status])
+}
+
+// Leave Model
+model Leave {
+  id           String      @id @default(uuid())
+  employeeId   String
+  leaveType    LeaveType
+  startDate    DateTime    @db.Date
+  endDate      DateTime    @db.Date
+  totalDays    Int
+  reason       String
+  status       LeaveStatus @default(PENDING)
+  approvedBy   String?
+  approvedAt   DateTime?
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+
+  // Relations
+  employee     Employee    @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@index([employeeId])
+  @@index([status])
+  @@index([leaveType])
+}
+
+// Salary Model
+model Salary {
+  id             String        @id @default(uuid())
+  employeeId     String
+  month          Int           // 1-12
+  year           Int
+  basicSalary    Decimal       @db.Decimal(10, 2)
+  allowances     Decimal       @default(0) @db.Decimal(10, 2)
+  deductions     Decimal       @default(0) @db.Decimal(10, 2)
+  grossSalary    Decimal       @db.Decimal(10, 2)
+  netSalary      Decimal       @db.Decimal(10, 2)
+  paymentDate    DateTime
+  paymentStatus  PaymentStatus @default(PENDING)
+  notes          String?
+  createdAt      DateTime      @default(now())
+
+  // Relations
+  employee       Employee      @relation(fields: [employeeId], references: [id], onDelete: Cascade)
+
+  @@unique([employeeId, month, year])
+  @@index([employeeId])
+  @@index([month, year])
+  @@index([paymentStatus])
+}

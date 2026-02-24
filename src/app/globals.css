@@ -1,21 +1,120 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Professional Blue/Slate HR Theme Colors */
+  --background: #f8fafc;
+  --foreground: #0f172a;
+  
+  /* Primary Colors - Professional Blue */
+  --primary: #1e40af;
+  --primary-foreground: #ffffff;
+  --primary-light: #3b82f6;
+  --primary-dark: #1e3a8a;
+  
+  /* Secondary Colors - Slate */
+  --secondary: #475569;
+  --secondary-foreground: #ffffff;
+  --secondary-light: #64748b;
+  --secondary-dark: #334155;
+  
+  /* Accent Colors */
+  --accent: #0ea5e9;
+  --accent-foreground: #ffffff;
+  
+  /* Muted Colors */
+  --muted: #f1f5f9;
+  --muted-foreground: #64748b;
+  
+  /* Card Colors */
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  
+  /* Border Colors */
+  --border: #e2e8f0;
+  --input: #e2e8f0;
+  --ring: #1e40af;
+  
+  /* Status Colors */
+  --success: #10b981;
+  --success-foreground: #ffffff;
+  --warning: #f59e0b;
+  --warning-foreground: #ffffff;
+  --danger: #ef4444;
+  --danger-foreground: #ffffff;
+  --info: #3b82f6;
+  --info-foreground: #ffffff;
+  
+  /* Radius */
+  --radius: 0.5rem;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-light: var(--primary-light);
+  --color-primary-dark: var(--primary-dark);
+  
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary-light: var(--secondary-light);
+  --color-secondary-dark: var(--secondary-dark);
+  
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-danger: var(--danger);
+  --color-danger-foreground: var(--danger-foreground);
+  --color-info: var(--info);
+  --color-info-foreground: var(--info-foreground);
+  
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f172a;
+    --foreground: #f8fafc;
+    
+    --primary: #3b82f6;
+    --primary-foreground: #ffffff;
+    --primary-light: #60a5fa;
+    --primary-dark: #1d4ed8;
+    
+    --secondary: #64748b;
+    --secondary-foreground: #ffffff;
+    --secondary-light: #94a3b8;
+    --secondary-dark: #475569;
+    
+    --accent: #38bdf8;
+    --accent-foreground: #0f172a;
+    
+    --muted: #1e293b;
+    --muted-foreground: #94a3b8;
+    
+    --card: #1e293b;
+    --card-foreground: #f8fafc;
+    
+    --border: #334155;
+    --input: #334155;
+    --ring: #3b82f6;
   }
 }
 
